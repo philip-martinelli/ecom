@@ -72,9 +72,9 @@ view: users {
   }
 
 
-  measure: perc_test {
+  dimension: perc_test_dim {
     type: number
-    sql: COUNT(distinct ${city})/COUNT(distinct ${id});;
+    sql: ${age}/${id};;
     value_format: "0.0%"
   }
 
