@@ -80,7 +80,7 @@ view: users {
 
   measure: perc_test_two {
     type: number
-    sql: COUNT(distinct ${city})/COUNT(distinct ${id});;
+    sql: COUNT(distinct ${city})/COUNT(distinct ${id})-1;;
     value_format: "+#,##0.00%;(#,##0.00%)"
   }
 
