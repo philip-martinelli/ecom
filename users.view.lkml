@@ -84,6 +84,13 @@ view: users {
     value_format: "+#,##0.00%;(#,##0.00%)"
   }
 
+  measure: fake_decimal {
+    type: number
+    value_format: "0.0%"
+    sql: 1.0 * 55/100 ;;
+  }
+
+
 
   # ----- Sets of fields for drilling ------
   set: detail {
