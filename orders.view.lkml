@@ -5,6 +5,8 @@ view: orders {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    drill_fields: [id, users.first_name,users.last_name,created_date]
+
   }
 
   dimension_group: created {
@@ -16,9 +18,15 @@ view: orders {
       week,
       month,
       quarter,
-      year
+      year,
+      day_of_year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  measure: first_order {
+  type: date_time
+  sql: min(${created_raw}) ;;
   }
 
   dimension: status {
@@ -34,6 +42,6 @@ view: orders {
 
   measure: count {
     type: count
-    drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
+#     drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
   }
 }

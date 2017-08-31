@@ -5,6 +5,7 @@ view: users {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    drill_fields: [id,first_name,last_name,orders.id]
   }
 
   dimension: age {
@@ -68,7 +69,7 @@ view: users {
 
   measure: count {
     type: count
-    drill_fields: [detail*]
+#     drill_fields: [detail*]
   }
 
 
