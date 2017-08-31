@@ -1,14 +1,13 @@
-view: test_pdt_trigger {
+view: test_half_hour {
+
   derived_table: {
     sql: SELECT
-        id FROM demo_db.users
+        user_id as user_id
+      FROM orders
+      GROUP BY user_id
       ;;
-  sql_trigger_value:select floor((extract(epoch from getdate()) - 30*60) / (2*60*60));;
-
-
-
+    sql_trigger_value: select floor((extract(epoch from getdate()) - 30*60) / (2*60*60));;
   }
-
 
   # Define your dimensions and measures here, like this:
   dimension: user_id {
@@ -17,6 +16,12 @@ view: test_pdt_trigger {
     sql: ${TABLE}.user_id ;;
   }
 }
+#
+#   dimension: lifetime_orders {
+#     description: "The total number of orders for each user"
+#     type: number
+#     sql: ${TABLE}.lifetime_orders ;;
+#   }
 #
 #   dimension_group: most_recent_purchase {
 #     description: "The date when each user last ordered"
