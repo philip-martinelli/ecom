@@ -15,11 +15,18 @@ view: orders {
       raw,
       time,
       date,
+      hour,
+      day_of_month,
       week,
+      day_of_week,
+      day_of_week_index,
       month,
+      month_name,
       quarter,
       year,
-      day_of_year
+      day_of_year,
+      fiscal_quarter,
+      fiscal_quarter_of_year
     ]
     sql: ${TABLE}.created_at ;;
   }
@@ -32,6 +39,8 @@ view: orders {
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+# #     html: <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+# ;;
   }
 
   dimension: user_id {
@@ -44,4 +53,16 @@ view: orders {
     type: count
 #     drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
   }
+
+  measure: user_ordered_list {
+    type: list
+    list_field: user_id
+  }
+
+#   measure: count_of_orders_list{
+#     type: count_distinct
+#     sql: ${user_ordered_list} ;;
+#   }
+
+
 }
