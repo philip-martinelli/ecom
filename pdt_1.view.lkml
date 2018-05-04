@@ -1,5 +1,10 @@
-view: orders {
-  sql_table_name: demo_db.orders ;;
+view: pdt_1 {
+  derived_table: {
+    sql:
+        SELECT
+            *
+        FROM demo_db.orders;;
+  }
 
   dimension: id {
     primary_key: yes
@@ -40,8 +45,8 @@ view: orders {
   }
 
   measure: first_order {
-  type: date_time
-  sql: min(${created_raw}) ;;
+    type: date_time
+    sql: min(${created_raw}) ;;
   }
 
   dimension: status {
@@ -60,8 +65,6 @@ view: orders {
   measure: count {
     type: count
 #     drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
-#     value_format: "[=<1]0.00,,\"%\";[>=1]\"$\"0.00"
-    value_format: "[=<40]0.00%;[>40]$#,##0.00"
   }
 
   measure: user_ordered_list {
@@ -83,18 +86,4 @@ view: orders {
       else: "Greater than or equal to 200"
     }
   }
-
-  measure: count_distinct_of_user_ids {
-    type: count_distinct
-    sql: ${user_id} ;;
-
-    drill_fields: [user_id]
-  }
-
-#   measure: count_of_orders_list{
-#     type: count_distinct
-#     sql: ${user_ordered_list} ;;
-#   }
-
-
 }

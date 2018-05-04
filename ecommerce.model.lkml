@@ -6,6 +6,10 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+explore: pdt_1 {}
+
+week_start_day: tuesday
+
 explore: events {
   join: users {
     type: left_outer
@@ -53,6 +57,11 @@ explore: orders {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
+  }
+  join: orders_extended {
+    type: left_outer
+    sql_on: ${orders_extended.id} = ${orders.id} ;;
+    relationship: one_to_one
   }
 }
 
