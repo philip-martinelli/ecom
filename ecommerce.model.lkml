@@ -8,7 +8,6 @@ include: "*.model"
 week_start_day: tuesday
 
 explore: events {
-  label: "Hello darkness my old friend"
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
