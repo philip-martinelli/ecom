@@ -57,6 +57,6 @@ view: order_items {
 
   measure: count {
     type: count
-    drill_fields: [id, inventory_items.id, orders.id]
+    drill_fields: [orders.id,orders.created_date,orders.diff_date_created_date_and_now,products.brand,products.item_name,products.sku,users.city,users.state,users.country]
   }
 }
