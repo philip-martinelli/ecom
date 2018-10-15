@@ -3,14 +3,12 @@ connection: "thelook"
 # include all the views
 include: "*.view"
 
-# include all the dashboards
-include: "*.dashboard"
-
-explore: pdt_1 {}
+include: "*.model"
 
 week_start_day: tuesday
 
 explore: events {
+  label: "Hello darkness my old friend"
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -27,15 +25,15 @@ explore: inventory_items {
 }
 
 explore: order_items {
-  join: inventory_items {
-    type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
-  }
-
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
+    relationship: many_to_one
+  }
+
+  join: inventory_items {
+    type: left_outer
+    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
 
@@ -58,11 +56,6 @@ explore: orders {
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
-  join: orders_extended {
-    type: left_outer
-    sql_on: ${orders_extended.id} = ${orders.id} ;;
-    relationship: one_to_one
-  }
 }
 
 explore: products {}
@@ -77,7 +70,8 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+}
 
 explore: users_nn {}
 

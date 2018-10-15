@@ -1,6 +1,7 @@
 view: users {
   sql_table_name: demo_db.users ;;
 
+
   dimension: id {
     primary_key: yes
     type: number
@@ -32,7 +33,8 @@ view: users {
       week,
       month,
       quarter,
-      year
+      year,
+      month_name
     ]
     sql: ${TABLE}.created_at ;;
   }
@@ -40,6 +42,11 @@ view: users {
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
+    action: {
+      label: "Send Email via Zapier"
+      url: "https://hooks.zapier.com/hooks/catch/22asd21dav9dsad92x/"
+      icon_url: "https://zapier.com/brand/assets/images/logos/zapier-logomark.png"
+    }
   }
 
   dimension: first_name {
@@ -58,6 +65,7 @@ view: users {
   }
 
   dimension: state {
+    map_layer_name: us_states
     type: string
     sql: ${TABLE}.state ;;
   }
@@ -69,29 +77,8 @@ view: users {
 
   measure: count {
     type: count
-#     drill_fields: [detail*]
+    drill_fields: [orders.id]
   }
-
-
-  dimension: perc_test_dim {
-    type: number
-    sql: ${age}/${id};;
-    value_format: "0.0%"
-  }
-
-  measure: perc_test_two {
-    type: number
-    sql: COUNT(distinct ${city})/COUNT(distinct ${id})-1;;
-    value_format: "+#,##0.00%;(#,##0.00%)"
-  }
-
-  measure: fake_decimal {
-    type: number
-    value_format: "0.0%"
-    sql: 1.0 * 55/100 ;;
-  }
-
-
 
   # ----- Sets of fields for drilling ------
   set: detail {

@@ -37,8 +37,13 @@ view: events {
     sql: ${TABLE}.value ;;
   }
 
-  measure: count {
+  measure: count_no_drill_fields {
+    label: "Count"
     type: count
-    drill_fields: [id, users.last_name, users.first_name, users.id]
+  }
+
+  measure: some_count {
+    type: count
+    drill_fields: [count_no_drill_fields]
   }
 }
