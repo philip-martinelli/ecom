@@ -32,11 +32,13 @@ view: orders {
       second
     ]
     sql: ${TABLE}.created_at ;;
+    view_label: "hello"
   }
 
   dimension: diff_date_created_date_and_now {
     type: number
     sql: DATEDIFF(${created_raw},CURRENT_DATE) ;;
+    view_label: "hello"
   }
 
   dimension: status {
@@ -44,6 +46,28 @@ view: orders {
     sql: ${TABLE}.status ;;
   }
 
+
+  dimension: status_with_case_when {
+    type: string
+    case: {
+      when: {
+        label: "cancelled"
+        sql: ${TABLE}.status = 'cancelled' ;;
+      }
+      when: {
+        label: "complete"
+        sql: ${TABLE}.status = 'complete' ;;
+      }
+      when: {
+        label: "pending"
+        sql: ${TABLE}.status = 'pending' ;;
+      }
+    }
+  }
+  dimension: yesno_test {
+    type: yesno
+    sql: 1=1 ;;
+  }
 
   dimension: user_id {
     type: number

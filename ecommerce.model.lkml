@@ -5,9 +5,13 @@ include: "*.view"
 
 include: "*.model"
 
+
 week_start_day: tuesday
 
+explore: test_view {}
+
 explore: events {
+
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -70,6 +74,12 @@ explore: user_data {
 }
 
 explore: users {
+  always_filter: {
+    filters: {
+      field: users.age
+      value: "<40"
+    }
+  }
 }
 
 explore: users_nn {}

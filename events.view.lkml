@@ -40,6 +40,7 @@ view: events {
   measure: count_no_drill_fields {
     label: "Count"
     type: count
+    value_format_name: decimal_3
   }
 
   measure: some_count {
