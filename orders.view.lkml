@@ -7,6 +7,11 @@ view: orders {
     type: number
     sql: ${TABLE}.id ;;
     drill_fields: [id, users.first_name,users.last_name,created_date]
+    action: {
+      label: "Send Email via Zapier"
+      url: "https://hooks.zapier.com/hooks/catch/22asd21dav9dsad92x/"
+      icon_url: "https://zapier.com/brand/assets/images/logos/zapier-logomark.png"
+    }
   }
 
   dimension_group: created {
@@ -32,13 +37,11 @@ view: orders {
       second
     ]
     sql: ${TABLE}.created_at ;;
-    view_label: "hello"
   }
 
   dimension: diff_date_created_date_and_now {
     type: number
     sql: DATEDIFF(${created_raw},CURRENT_DATE) ;;
-    view_label: "hello"
   }
 
   dimension: status {

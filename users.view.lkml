@@ -42,11 +42,7 @@ view: users {
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
-    action: {
-      label: "Send Email via Zapier"
-      url: "https://hooks.zapier.com/hooks/catch/22asd21dav9dsad92x/"
-      icon_url: "https://zapier.com/brand/assets/images/logos/zapier-logomark.png"
-    }
+
   }
 
   dimension: first_name {
