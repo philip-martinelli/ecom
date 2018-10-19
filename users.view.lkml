@@ -80,6 +80,12 @@ view: users {
     drill_fields: [orders.id]
   }
 
+  measure: median_test {
+    type: median
+    sql: ${age} ;;
+    value_format: "0.00"
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

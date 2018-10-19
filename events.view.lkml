@@ -47,4 +47,10 @@ view: events {
     type: count
     drill_fields: [count_no_drill_fields]
   }
+
+  measure: median_test {
+    type: median
+    sql: 1 ;;
+
+  }
 }

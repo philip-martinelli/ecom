@@ -54,6 +54,14 @@ explore: order_items {
 }
 
 explore: orders {
+
+  sql_always_where:
+  {% if users._in_query %}
+  users.age > 40
+  {% else %}
+  1=1
+  {% endif %} ;;
+
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
@@ -74,12 +82,6 @@ explore: user_data {
 }
 
 explore: users {
-  always_filter: {
-    filters: {
-      field: users.age
-      value: "<40"
-    }
-  }
 }
 
 explore: users_nn {}

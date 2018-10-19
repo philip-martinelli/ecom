@@ -47,22 +47,33 @@ view: orders {
   }
 
 
+
   dimension: status_with_case_when {
     type: string
     case: {
       when: {
-        label: "cancelled"
-        sql: ${TABLE}.status = 'cancelled' ;;
+        label: " K"
+        sql: 1=1 ;;
       }
+
       when: {
-        label: "complete"
+        label: " 53"
         sql: ${TABLE}.status = 'complete' ;;
       }
       when: {
-        label: "pending"
+        label: "1"
+        sql: ${TABLE}.status = 'complete' ;;
+      }
+      when: {
+        label: "3"
         sql: ${TABLE}.status = 'pending' ;;
       }
-    }
+      when: {
+        label: "2"
+        sql: ${TABLE}.status = 'cancelled' ;;
+      }
+
+  }
   }
   dimension: yesno_test {
     type: yesno
