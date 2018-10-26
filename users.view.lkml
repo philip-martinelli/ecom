@@ -9,11 +9,6 @@ view: users {
     drill_fields: [id,first_name,last_name,orders.id]
   }
 
-  dimension: age {
-    type: number
-    sql: ${TABLE}.age ;;
-  }
-
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
@@ -71,15 +66,20 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+
+  dimension: age {
+    type: number
+    sql: ${TABLE}.age ;;
+  }
+
   measure: count {
     type: count
-    drill_fields: [orders.id]
   }
 
   measure: median_test {
     type: median
     sql: ${age} ;;
-    value_format: "0.00"
+    drill_fields: [age,count]
   }
 
   # ----- Sets of fields for drilling ------

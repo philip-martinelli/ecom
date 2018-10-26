@@ -3,8 +3,6 @@ connection: "thelook"
 # include all the views
 include: "*.view"
 
-include: "*.model"
-
 
 week_start_day: tuesday
 

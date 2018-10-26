@@ -1,5 +1,5 @@
 view: orders {
-  sql_table_name: demo_db.orders ;;
+  sql_table_name: demo_db.orders;;
 
 
   dimension: id {
@@ -8,8 +8,8 @@ view: orders {
     sql: ${TABLE}.id ;;
     drill_fields: [id, users.first_name,users.last_name,created_date]
     action: {
-      label: "Send Email via Zapier"
-      url: "https://hooks.zapier.com/hooks/catch/22asd21dav9dsad92x/"
+      label: "Send Email to Distribution Manager"
+      url: "https://hooks.zapier.com/hooks/catch/abcdefghijk_this_is_a_bad_link"
       icon_url: "https://zapier.com/brand/assets/images/logos/zapier-logomark.png"
     }
   }
@@ -51,33 +51,19 @@ view: orders {
 
 
 
+
+
   dimension: status_with_case_when {
     type: string
     case: {
       when: {
-        label: " K"
-        sql: 1=1 ;;
+      label: "complete"
+      sql: ${status} = "complete" ;;
       }
-
-      when: {
-        label: " 53"
-        sql: ${TABLE}.status = 'complete' ;;
-      }
-      when: {
-        label: "1"
-        sql: ${TABLE}.status = 'complete' ;;
-      }
-      when: {
-        label: "3"
-        sql: ${TABLE}.status = 'pending' ;;
-      }
-      when: {
-        label: "2"
-        sql: ${TABLE}.status = 'cancelled' ;;
-      }
-
+    }
   }
-  }
+
+
   dimension: yesno_test {
     type: yesno
     sql: 1=1 ;;
@@ -97,6 +83,7 @@ view: orders {
   measure: count_distinct_of_user_ids {
     type: count_distinct
     sql: ${user_id} ;;
+
   }
 
 
