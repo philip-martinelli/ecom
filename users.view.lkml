@@ -2,6 +2,20 @@ view: users {
   sql_table_name: demo_db.users ;;
 
 
+##############################################################
+
+  filter: some_filter {
+    type: yesno
+  }
+
+  measure: test_count {
+    type: number
+    drill_fields: [id]
+    sql: CASE WHEN {% condition some_filter %} 'no' {% endcondition %} THEN ${count} WHEN {% condition some_filter%} 'yes' {% endcondition %} THEN ${count_distinct_of_first_names} ELSE NULL END ;;
+  }
+
+##############################################################
+
   dimension: id {
     primary_key: yes
     type: number
@@ -76,10 +90,20 @@ view: users {
     type: count
   }
 
+  measure: count_distinct_of_first_names {
+    type: count_distinct
+    sql: ${first_name} ;;
+  }
+
   measure: median_test {
     type: median
     sql: ${age} ;;
     drill_fields: [age,count]
+  }
+
+  measure: field_name {
+    type: list
+    list_field: state
   }
 
   # ----- Sets of fields for drilling ------
