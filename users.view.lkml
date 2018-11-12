@@ -8,10 +8,12 @@ view: users {
     type: yesno
   }
 
+
+
   measure: test_count {
     type: number
     drill_fields: [id]
-    sql: CASE WHEN {% condition some_filter %} 'no' {% endcondition %} THEN ${count} WHEN {% condition some_filter%} 'yes' {% endcondition %} THEN ${count_distinct_of_first_names} ELSE NULL END ;;
+    sql: CASE WHEN {% condition some_filter %} 'no' {% endcondition %} THEN ${count} WHEN {% condition some_filter %} 'yes' {% endcondition %} THEN ${count_distinct_of_first_names} ELSE NULL END ;;
   }
 
 ##############################################################
@@ -88,6 +90,10 @@ view: users {
 
   measure: count {
     type: count
+    filters: {
+      field: state
+      value: "%Calif%,%New%"
+    }
   }
 
   measure: count_distinct_of_first_names {
