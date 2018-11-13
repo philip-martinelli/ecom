@@ -44,15 +44,17 @@ view: orders {
     sql: DATEDIFF(${created_raw},CURRENT_DATE) ;;
   }
 
-#   dimension: status {
-#     type: string
-#     sql: ${TABLE}.status ;;
-#   }
+  dimension: status {
+    type: string
+    sql: ${TABLE}.status ;;
+  }
 
 
 
-
-
+  dimension: test_status {
+    type: string
+    sql: ${TABLE}.status ;;
+  }
 
   dimension: yesno_test {
     type: yesno
