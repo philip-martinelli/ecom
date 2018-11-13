@@ -51,10 +51,10 @@ view: orders {
 
 
 
-  dimension: test_status {
-    type: string
-    sql: ${TABLE}.status ;;
-  }
+#   dimension: test_status {
+#     type: string
+#     sql: ${TABLE}.status ;;
+#   }
 
   dimension: yesno_test {
     type: yesno
