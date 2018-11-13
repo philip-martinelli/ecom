@@ -8,6 +8,7 @@ week_start_day: tuesday
 
 explore: test_view {}
 
+
 explore: events {
 
   join: users {

@@ -75,10 +75,10 @@ view: orders {
     sql: ${TABLE}.user_id ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [orders.id, orders.user_id, orders.created_date, orders.diff_date_created_date_and_now]
-  }
+#   measure: count {
+#     type: count
+#     drill_fields: [orders.id, orders.user_id, orders.created_date, orders.diff_date_created_date_and_now]
+#   }
 
   measure: count_distinct_of_user_ids {
     type: count_distinct
