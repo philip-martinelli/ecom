@@ -8,7 +8,6 @@ week_start_day: tuesday
 
 explore: test_view {}
 
-
 explore: events {
 
   join: users {
@@ -53,6 +52,7 @@ explore: order_items {
 }
 
 explore: orders {
+
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;

@@ -78,6 +78,11 @@ view: orders {
 
   }
 
+  measure: eaoifnwoenfe {
+    type: string
+    sql: CASE WHEN ${count_distinct_of_user_ids} > 100 THEN 'Hello' ELSE 'GOODBYE' END ;;
+  }
+
 
   set: some_set {
     fields: [orders.tier_id]

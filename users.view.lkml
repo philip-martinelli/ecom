@@ -90,10 +90,7 @@ view: users {
 
   measure: count {
     type: count
-    filters: {
-      field: state
-      value: "%Calif%,%New%"
-    }
+    drill_fields: [age,count]
   }
 
   measure: count_distinct_of_first_names {
