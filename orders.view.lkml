@@ -36,11 +36,24 @@ view: orders {
   sql: min(${created_raw}) ;;
   }
 
+  measure: days_since_first_order{
+    type: number
+    sql: ${first_order}::date - current_date();;
+  }
+
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
-# #     html: <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
-# ;;
+    html: <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    ;;
+    link: {
+      label: "Click Here"
+      url: "https://github.com/utilitywarehouse/data-warehouse-documentation/wiki/Data-Dictionary:-Partner-Account#{{ _field._name }}"
+
+  }}
+  filter: stat {
+    type: string
+    required_fields: [status]
   }
 
   dimension: user_id {
@@ -52,6 +65,10 @@ view: orders {
   measure: count {
     type: count
 #     drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
+  }
+  measure: percent_previous {
+    type: percent_of_previous
+    sql: ${count} ;;
   }
 
   measure: user_ordered_list {
