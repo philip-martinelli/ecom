@@ -1,6 +1,14 @@
 view: orders {
   sql_table_name: demo_db.orders;;
 
+  parameter: test_param {
+    type: string
+  }
+
+  filter: some_filter {
+    type: number
+    sql: {% condition some_filter %} ${id} {% endcondition %} AND {% condition some_filter %} ${user_id} {% endcondition %} ;;
+  }
 
   dimension: id {
     primary_key: yes
@@ -47,9 +55,8 @@ view: orders {
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+    html: <font size="5">{{value}}</font> ;;
   }
-
-
 
 #   dimension: test_status {
 #     type: string

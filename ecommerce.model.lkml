@@ -6,7 +6,11 @@ include: "*.view"
 
 week_start_day: tuesday
 
-explore: test_view {}
+explore: test_orders {
+  view_name: orders
+  persist_for: "1 minutes"
+}
+
 
 explore: events {
 
@@ -52,7 +56,6 @@ explore: order_items {
 }
 
 explore: orders {
-
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
