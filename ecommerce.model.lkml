@@ -4,7 +4,7 @@ connection: "thelook"
 include: "*.view"
 
 # include all the dashboards
-include: "*.dashboard"
+#include: "*.dashboard"
 
 explore: events {
   join: users {
@@ -68,6 +68,26 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+  join: user_data {
+    sql_on: ${orders.id}=${user_data.id} ;;
+  }
+  join: ndt {
+    sql_on: ${users.id}=${ndt.id} ;;
+    relationship: one_to_one
+  }
+  join: orders {
+    sql_on: ${orders.user_id} = ${users.id};;
+  }
+
+  }
 
 explore: users_nn {}
+explore: sample_dt {
+  fields: [ALL_FIELDS*,-sample_dt.count_d_joined]
+  join: sample_dt_self {
+    from: sample_dt
+    fields:[sample_dt_self.count_d_joined]
+    sql_on: ${sample_dt.order_date} >= ${sample_dt_self.order_date} ;;
+  }
+}
