@@ -69,6 +69,10 @@ explore: user_data {
 }
 
 explore: users {
+  access_filter: {
+    field: state
+    user_attribute: state
+  }
   join: user_data {
     sql_on: ${orders.id}=${user_data.id} ;;
   }
@@ -87,6 +91,7 @@ explore: sample_dt {
   fields: [ALL_FIELDS*,-sample_dt.count_d_joined]
   join: sample_dt_self {
     from: sample_dt
+    type: inner
     fields:[sample_dt_self.count_d_joined]
     sql_on: ${sample_dt.order_date} >= ${sample_dt_self.order_date} ;;
   }
