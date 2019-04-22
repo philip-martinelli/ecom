@@ -11,11 +11,22 @@ view: products {
     type: string
     sql: ${TABLE}.brand ;;
     drill_fields: [item_name,brand,department]
+
+    link: {
+      label: "Brand Dashboard"
+      url: "https://dcl.dev.looker.com/dashboards/234" #This should actually link out to a dashboard
+      icon_url: "https://looker.com/favicon.ico"
+    }
   }
 
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
+  }
+
+  dimension: is_male {
+    type: yesno
+    sql: ${TABLE}.department = 'Men' ;;
   }
 
   dimension: department {
