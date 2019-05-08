@@ -5,6 +5,7 @@ view: orders {
     type: string
   }
 
+
   filter: some_filter {
     type: number
     sql: {% condition some_filter %} ${id} {% endcondition %} AND {% condition some_filter %} ${user_id} {% endcondition %} ;;
