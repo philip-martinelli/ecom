@@ -37,8 +37,20 @@ view: events {
     sql: ${TABLE}.value ;;
   }
 
-  measure: count {
+  measure: count_no_drill_fields {
+    label: "Count"
     type: count
-    drill_fields: [id, users.last_name, users.first_name, users.id]
+    value_format_name: decimal_3
+  }
+
+  measure: some_count {
+    type: count
+    drill_fields: [count_no_drill_fields]
+  }
+
+  measure: median_test {
+    type: median
+    sql: 1 ;;
+
   }
 }

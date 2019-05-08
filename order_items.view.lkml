@@ -38,25 +38,14 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
-  dimension: sale_price_format0 {
-    type: number
-    sql: ${TABLE}.sale_price ;;
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
     value_format_name: usd_0
-  }
-
-  dimension: sale_price_format1 {
-    type: number
-    sql: ${TABLE}.sale_price ;;
-    value_format_name: usd
-  }
-
-  measure: items_id_list {
-    type: list
-    list_field: inventory_item_id
   }
 
   measure: count {
     type: count
-    drill_fields: [id, inventory_items.id, orders.id]
+    drill_fields: [orders.id,orders.created_date,orders.diff_date_created_date_and_now, users.email,users.city,users.state,users.country, products.brand,products.item_name,products.sku]
   }
 }

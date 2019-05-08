@@ -1,18 +1,32 @@
 view: orders {
-  sql_table_name: demo_db.orders ;;
+  sql_table_name: demo_db.orders;;
+
+  parameter: test_param {
+    type: string
+  }
+
+  filter: some_filter {
+    type: number
+    sql: {% condition some_filter %} ${id} {% endcondition %} AND {% condition some_filter %} ${user_id} {% endcondition %} ;;
+  }
 
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
     drill_fields: [id, users.first_name,users.last_name,created_date]
-
+    action: {
+      label: "Send Email to Distribution Manager"
+      url: "https://hooks.zapier.com/hooks/catch/abcdefghijk_this_is_a_bad_link"
+      icon_url: "https://zapier.com/brand/assets/images/logos/zapier-logomark.png"
+    }
   }
 
   dimension_group: created {
     type: time
     timeframes: [
       raw,
+      time_of_day,
       time,
       date,
       hour,
@@ -26,29 +40,32 @@ view: orders {
       year,
       day_of_year,
       fiscal_quarter,
+      fiscal_month_num,
       fiscal_quarter_of_year,
       second
     ]
     sql: ${TABLE}.created_at ;;
   }
 
-  dimension: periods_ago {
+  dimension: diff_date_created_date_and_now {
     type: number
-    sql: CASE WHEN MOD(${created_year},4) = 0 THEN FLOOR( DATEDIFF(CURRENT_DATE(), ${created_raw}) / 366 )
-              WHEN MOD(${created_year},4) != 0 THEN FLOOR( DATEDIFF(CURRENT_DATE(), ${created_raw}) / 365 )
-              END;;
-  }
-
-  measure: first_order {
-  type: date_time
-  sql: min(${created_raw}) ;;
+    sql: DATEDIFF(${created_raw},CURRENT_DATE) ;;
   }
 
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
-# #     html: <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
-# ;;
+    html: <font size="5">{{value}}</font> ;;
+  }
+
+#   dimension: test_status {
+#     type: string
+#     sql: ${TABLE}.status ;;
+#   }
+
+  dimension: yesno_test {
+    type: yesno
+    sql: 1=1 ;;
   }
 
   dimension: user_id {
@@ -59,42 +76,25 @@ view: orders {
 
   measure: count {
     type: count
-#     drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
-#     value_format: "[=<1]0.00,,\"%\";[>=1]\"$\"0.00"
-#    value_format: "[=<40]0.00%;[>40]$#,##0.00"
-  }
 
-  measure: user_ordered_list {
-    type: list
-    list_field: user_id
-  }
 
-  dimension: case_param_dimension {
-    type: string
-    case: {
-      when: {
-        sql: ${user_id} >= 1 AND ${user_id} < 100 ;;
-        label: "1 to 99"
-      }
-      when: {
-        sql: ${user_id} >= 100 AND ${user_id} < 200 ;;
-        label: "100 to 199"
-      }
-      else: "Greater than or equal to 200"
-    }
+    drill_fields: [orders.id, orders.user_id, orders.created_date, orders.diff_date_created_date_and_now]
+
   }
 
   measure: count_distinct_of_user_ids {
     type: count_distinct
     sql: ${user_id} ;;
 
-    drill_fields: [user_id]
   }
 
-#   measure: count_of_orders_list{
-#     type: count_distinct
-#     sql: ${user_ordered_list} ;;
-#   }
+  measure: eaoifnwoenfe {
+    type: string
+    sql: CASE WHEN ${count_distinct_of_user_ids} > 100 THEN 'Hello' ELSE 'GOODBYE' END ;;
+  }
 
 
+  set: some_set {
+    fields: [orders.tier_id]
+  }
 }

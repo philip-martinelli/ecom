@@ -1,19 +1,16 @@
-include: "*.view.lkml"
+view: test_view {
+  sql_table_name:
+  {% if test_view.id._in_query %}
+  demo_db.orders
+  {% else %}
+  demo_db.users
+  {% endif %}
+  ;;
 
-view: orders_extended {
-  extends: [orders]
+  dimension: id {}
 
-  dimension: id {
-  }
-
-  measure: sum_of_somethings {
-    type: sum
-    sql: ${id} ;;
-  }
-
-  measure: avg_of_things {
-    type: average
-    sql: ${id} ;;
+  dimension: some_string {
+    sql: 'aoiewnfoawne' ;;
   }
   # # You can specify the table name if it's different from the view name:
   # sql_table_name: my_schema_name.tester ;;
@@ -45,7 +42,7 @@ view: orders_extended {
   # }
 }
 
-# view: orders_extended {
+# view: test_view {
 #   # Or, you could make this view a derived table, like this:
 #   derived_table: {
 #     sql: SELECT

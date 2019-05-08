@@ -4,13 +4,25 @@ connection: "thelook"
 include: "*.view"
 
 # include all the dashboards
-include: "*.dashboard"
-
-explore: pdt_1 {}
-
-week_start_day: tuesday
+#include: "*.dashboard"
+#
+# week_start_day: tuesday
+#
+# explore: test_orders {
+#   view_name: orders
+#   persist_for: "1 minutes"
+# }
+#
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+#
 
 explore: events {
+
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -27,15 +39,15 @@ explore: inventory_items {
 }
 
 explore: order_items {
-  join: inventory_items {
-    type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
-  }
-
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
+    relationship: many_to_one
+  }
+
+  join: inventory_items {
+    type: left_outer
+    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
 
@@ -58,11 +70,6 @@ explore: orders {
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
-  join: orders_extended {
-    type: left_outer
-    sql_on: ${orders_extended.id} = ${orders.id} ;;
-    relationship: one_to_one
-  }
 }
 
 explore: products {}
@@ -77,7 +84,12 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+  access_filter: {
+    field: state
+    user_attribute: state
+  }
+}
 
 explore: users_nn {}
 
