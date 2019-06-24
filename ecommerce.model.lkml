@@ -21,6 +21,12 @@ include: "*.dashboard"
 # # TALA IS HACKING INTO THE MAINFARME
 #
 
+datagroup: testyo {
+  max_cache_age: "24 hours"
+  sql_trigger: SELECT 1 ;;
+}
+
+
 explore: events {
 
   join: users {
