@@ -86,12 +86,7 @@ explore: user_data {
   }
 }
 
-explore: users {
-  access_filter: {
-    field: state
-    user_attribute: state
-  }
-}
+explore: users {}
 
 explore: users_nn {}
 
