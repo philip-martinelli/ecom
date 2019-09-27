@@ -77,7 +77,14 @@ view: orders {
 
   measure: count {
     type: count
-
+    html:
+    {% if value > 100 %}
+    <font color="darkgreen"><img src="https://cdn.emojidex.com/emoji/px32/nerd_face%28smiley%29.png?1442200539"> {{ rendered_value }}</font>
+    {% elsif value > 50 %}
+    <font color="goldenrod">{{ rendered_value }}</font>
+    {% else %}
+    <font color="darkred">{{ rendered_value }}</font>
+    {% endif %} ;;
 
     drill_fields: [orders.id, orders.user_id, orders.created_date, orders.diff_date_created_date_and_now]
 
