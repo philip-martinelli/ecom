@@ -10,7 +10,7 @@ view: sql_runner_query {
   parameter: test_param {
     type: string
   }
-
+#
   measure: count {
     type: count
     drill_fields: [detail*]
