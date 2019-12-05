@@ -5,6 +5,15 @@ view: orders {
     type: string
   }
 
+  filter: date_filter {
+    type: date
+  }
+
+  dimension: yesno_date {
+    type: yesno
+    sql: {% condition date_filter %} ${created_raw} {% endcondition %} ;;
+  }
+
 
   filter: some_filter {
     type: number
@@ -90,6 +99,12 @@ view: orders {
 
   }
 
+  measure: percentage {
+    type: percent_of_total
+    sql: ${count} ;;
+    value_format_name: percent_2
+  }
+
   measure: count_distinct_of_user_ids {
     type: count_distinct
     sql: ${user_id} ;;
@@ -105,4 +120,4 @@ view: orders {
   set: some_set {
     fields: [orders.tier_id]
   }
-}
+  }
