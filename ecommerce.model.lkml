@@ -4,7 +4,7 @@ connection: "thelook"
 include: "*.view"
 
 # include all the dashboards
-include: "*.dashboard"
+# include: "*.dashboard"
 
 explore: events {
   join: users {
@@ -56,7 +56,12 @@ explore: orders {
   }
 }
 
-explore: products {}
+# explore: products {
+#   sql_always_where: {% if products.turn_on_filter._parameter_value == "true" %} ${brand} LIKE '%'||${brand}||'%'
+#         {% else %} 1=1
+#         {% endif %};;
+#
+# }
 
 explore: schema_migrations {}
 
@@ -68,7 +73,15 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+  sql_always_where: {% if users.turn_on_filter._parameter_value == "true" %} ${state} LIKE '&'||${city}||'&'
+  {% else %} 1=1
+  {% endif %};;
+
+
+
+
+}
 
 explore: users_nn {}
 

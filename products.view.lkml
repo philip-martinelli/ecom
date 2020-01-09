@@ -7,11 +7,64 @@ view: products {
     sql: ${TABLE}.id ;;
   }
 
+  measure: test_drop_down {
+    type: average
+    sql: ${id} ;;
+    html:
+    hola Min: {{id._linked_value}}
+     <br>
+     hola Mean: {{id._linked_value}}
+     <br>
+     Max: {{id._linked_value}};;
+
+    }
+
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;
     drill_fields: [item_name,brand,department]
   }
+
+  dimension: products_brand_split_word {
+    type: string
+    sql: ${brand};;
+    html:
+    {% assign words = {{value}} | split: ' ' %}
+    {% assign numwords = 0 %}
+    {% for word in words %}
+    {{ word }}
+    {% assign numwords = numwords | plus: 1 %}
+    {% assign mod = numwords | modulo: 1 %}
+    {% if mod == 0 %}
+    <br>
+    {% endif %}
+    {% endfor %} ;;
+  }
+
+  dimension: products_brand_split_n_char {
+    type: string
+    sql: ${brand} ;;
+    html:
+    {% assign words_lenggth = {{value}} | size %}
+    {% assign start_p = 0 %}
+    {% assign lenggth = 3 %}
+    {% for i in (1..words_lenggth) %}
+    {% assign tempp = i | modulo: lenggth %}
+      {% if tempp == 0 %}
+        {{ value | slice:  start_p, lenggth }}<br>
+        {% assign start_p = start_p | plus: lenggth %}
+      {% else %}
+        {%continue%}
+      {% endif %}
+    {% endfor %}
+    ;;
+  }
+
+#
+#   parameter: turn_on_filter{
+#     type: yesno
+#   }
+
 
   dimension: category {
     type: string
@@ -42,6 +95,8 @@ view: products {
     type: number
     sql: ${TABLE}.retail_price ;;
   }
+
+
 
   dimension: sku {
     type: string

@@ -8,6 +8,11 @@ view: users {
     drill_fields: [id,first_name,last_name,orders.id]
   }
 
+
+  parameter: turn_on_filter{
+    type: yesno
+  }
+
   dimension: age {
     type: number
     sql: ${TABLE}.age ;;

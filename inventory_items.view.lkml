@@ -32,8 +32,10 @@ view: inventory_items {
     sql: ${TABLE}.product_id ;;
   }
 
-  dimension_group: sold {
+  dimension_group: x {
     type: time
+     group_label: "test"
+#     label: "no_date_here"
     timeframes: [
       raw,
       time,
@@ -44,6 +46,7 @@ view: inventory_items {
       year
     ]
     sql: ${TABLE}.sold_at ;;
+
   }
 
   measure: count {

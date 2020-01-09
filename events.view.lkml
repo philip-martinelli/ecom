@@ -36,6 +36,11 @@ view: events {
     type: string
     sql: ${TABLE}.value ;;
   }
+# dimension: test {
+#   type: string
+#   sql: ${count} ;;
+# }
+
 
   measure: count {
     type: count
