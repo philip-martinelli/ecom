@@ -7,9 +7,9 @@ view: inventory_items {
     sql: ${TABLE}.id ;;
   }
 
-  dimension: cost {
+  dimension: cost_2 {
     type: number
-    sql: ${TABLE}.cost ;;
+    sql: ${TABLE}.cost_2 ;;
   }
 
   dimension_group: created {

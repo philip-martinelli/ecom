@@ -21,7 +21,9 @@ explore: inventory_items {
     relationship: many_to_one
   }
 }
-
+datagroup: scheduling {
+  sql_trigger: SELECT HOUR(CURTIME())  ;;
+}
 explore: order_items {
   join: inventory_items {
     type: left_outer
