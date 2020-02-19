@@ -1,4 +1,17 @@
-view: new_view {
+view: test_view {
+  sql_table_name:
+  {% if test_view.id._in_query %}
+  demo_db.orders
+  {% else %}
+  demo_db.users
+  {% endif %}
+  ;;
+
+  dimension: id {}
+
+  dimension: some_string {
+    sql: 'aoiewnfoawne' ;;
+  }
   # # You can specify the table name if it's different from the view name:
   # sql_table_name: my_schema_name.tester ;;
   #
@@ -29,7 +42,7 @@ view: new_view {
   # }
 }
 
-# view: new_view {
+# view: test_view {
 #   # Or, you could make this view a derived table, like this:
 #   derived_table: {
 #     sql: SELECT

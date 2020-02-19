@@ -1,11 +1,30 @@
 view: users {
+
   sql_table_name: demo_db.users ;;
+
+
+##############################################################
+
+  filter: some_filter {
+    type: yesno
+  }
+
+
+
+  measure: test_count {
+    type: number
+    drill_fields: [id]
+    sql: CASE WHEN {% condition some_filter %} 'no' {% endcondition %} THEN ${count} WHEN {% condition some_filter %} 'yes' {% endcondition %} THEN ${count_distinct_of_first_names} ELSE NULL END ;;
+  }
+
+##############################################################
 
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
     drill_fields: [id,first_name,last_name,orders.id]
+<<<<<<< HEAD
   }
 
 
@@ -16,6 +35,8 @@ view: users {
   dimension: age {
     type: number
     sql: ${TABLE}.age ;;
+=======
+>>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
   }
 
   dimension: city {
@@ -37,7 +58,8 @@ view: users {
       week,
       month,
       quarter,
-      year
+      year,
+      month_name
     ]
     sql: ${TABLE}.created_at ;;
   }
@@ -45,6 +67,7 @@ view: users {
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
+
   }
 
   dimension: first_name {
@@ -63,6 +86,7 @@ view: users {
   }
 
   dimension: state {
+    map_layer_name: us_states
     type: string
     sql: ${TABLE}.state ;;
   }
@@ -72,31 +96,32 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+
+  dimension: age {
+    type: number
+    sql: ${TABLE}.age ;;
+  }
+
   measure: count {
     type: count
-#     drill_fields: [detail*]
+    drill_fields: [age,count]
   }
 
-
-  dimension: perc_test_dim {
-    type: number
-    sql: ${age}/${id};;
-    value_format: "0.0%"
+  measure: count_distinct_of_first_names {
+    type: count_distinct
+    sql: ${first_name} ;;
   }
 
-  measure: perc_test_two {
-    type: number
-    sql: COUNT(distinct ${city})/COUNT(distinct ${id})-1;;
-    value_format: "+#,##0.00%;(#,##0.00%)"
+  measure: median_test {
+    type: median
+    sql: ${age} ;;
+    drill_fields: [age,count]
   }
 
-  measure: fake_decimal {
-    type: number
-    value_format: "0.0%"
-    sql: 1.0 * 55/100 ;;
+  measure: field_name {
+    type: list
+    list_field: state
   }
-
-
 
   # ----- Sets of fields for drilling ------
   set: detail {

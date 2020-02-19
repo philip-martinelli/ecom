@@ -4,9 +4,31 @@ connection: "thelook"
 include: "*.view"
 
 # include all the dashboards
+<<<<<<< HEAD
 # include: "*.dashboard"
+=======
+include: "*.dashboard"
+#
+# week_start_day: tuesday
+#
+# explore: test_orders {
+#   view_name: orders
+#   persist_for: "1 minutes"
+# }
+#
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+# # TALA IS HACKING INTO THE MAINFARME
+#
+
+
+>>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
 
 explore: events {
+
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -25,15 +47,15 @@ datagroup: scheduling {
   sql_trigger: SELECT HOUR(CURTIME())  ;;
 }
 explore: order_items {
-  join: inventory_items {
-    type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
-  }
-
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
+    relationship: many_to_one
+  }
+
+  join: inventory_items {
+    type: left_outer
+    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
 
@@ -56,6 +78,21 @@ explore: orders {
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
+  join: order_items {
+    type: left_outer
+    sql_on: ${order_items.order_id}=${orders.id} ;;
+    relationship: one_to_one
+  }
+  join: products {
+    type: left_outer
+    sql_on: ${inventory_items.product_id} = ${products.id};;
+    relationship:many_to_one}
+
+  join: inventory_items {
+    type: left_outer
+    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
+    relationship: many_to_one
+  }
 }
 
 # explore: products {
@@ -76,6 +113,7 @@ explore: user_data {
 }
 
 explore: users {
+<<<<<<< HEAD
   sql_always_where: {% if users.turn_on_filter._parameter_value == "true" %} ${state} LIKE '&'||${city}||'&'
   {% else %} 1=1
   {% endif %};;
@@ -83,6 +121,12 @@ explore: users {
 
 
 
+=======
+  access_filter: {
+    field: state
+    user_attribute: state
+  }
+>>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
 }
 
 explore: users_nn {}

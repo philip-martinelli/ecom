@@ -1,18 +1,42 @@
 view: orders {
-  sql_table_name: demo_db.orders ;;
+  sql_table_name: demo_db.orders;;
+
+  parameter: test_param {
+    type: string
+  }
+
+  filter: date_filter {
+    type: date
+  }
+
+  dimension: yesno_date {
+    type: yesno
+    sql: {% condition date_filter %} ${created_raw} {% endcondition %} ;;
+  }
+
+
+  filter: some_filter {
+    type: number
+    sql: {% condition some_filter %} ${id} {% endcondition %} AND {% condition some_filter %} ${user_id} {% endcondition %} ;;
+  }
 
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
     drill_fields: [id, users.first_name,users.last_name,created_date]
-
+    action: {
+      label: "Send Email to Distribution Manager"
+      url: "https://hooks.zapier.com/hooks/catch/abcdefghijk_this_is_a_bad_link"
+      icon_url: "https://zapier.com/brand/assets/images/logos/zapier-logomark.png"
+    }
   }
 
   dimension_group: created {
     type: time
     timeframes: [
       raw,
+      time_of_day,
       time,
       date,
       hour,
@@ -26,21 +50,32 @@ view: orders {
       year,
       day_of_year,
       fiscal_quarter,
-      fiscal_quarter_of_year
+      fiscal_month_num,
+      fiscal_quarter_of_year,
+      second
     ]
     sql: ${TABLE}.created_at ;;
   }
 
-  measure: first_order {
-  type: date_time
-  sql: min(${created_raw}) ;;
+  dimension: diff_date_created_date_and_now {
+    type: number
+    sql: DATEDIFF(${created_raw},CURRENT_DATE) ;;
   }
 
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
-# #     html: <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
-# ;;
+#     html: <font size="5">{{value}}</font> ;;
+  }
+
+#   dimension: test_status {
+#     type: string
+#     sql: ${TABLE}.status ;;
+#   }
+
+  dimension: yesno_test {
+    type: yesno
+    sql: 1=1 ;;
   }
 
   dimension: user_id {
@@ -51,18 +86,38 @@ view: orders {
 
   measure: count {
     type: count
-#     drill_fields: [id, users.last_name, users.first_name, users.id, order_items.count]
+#     html:
+#     {% if value > 100 %}
+#     <font color="darkgreen"><img src="https://cdn.emojidex.com/emoji/px32/nerd_face%28smiley%29.png?1442200539"> {{ rendered_value }}</font>
+#     {% elsif value > 50 %}
+#     <font color="goldenrod">{{ rendered_value }}</font>
+#     {% else %}
+#     <font color="darkred">{{ rendered_value }}</font>
+#     {% endif %} ;;
+
+    drill_fields: [orders.id, orders.user_id, orders.created_date, orders.diff_date_created_date_and_now]
+
   }
 
-  measure: user_ordered_list {
-    type: list
-    list_field: user_id
+  measure: percentage {
+    type: percent_of_total
+    sql: ${count} ;;
+    value_format_name: percent_2
   }
 
-#   measure: count_of_orders_list{
-#     type: count_distinct
-#     sql: ${user_ordered_list} ;;
-#   }
+  measure: count_distinct_of_user_ids {
+    type: count_distinct
+    sql: ${user_id} ;;
+
+  }
+
+  measure: eaoifnwoenfe {
+    type: string
+    sql: CASE WHEN ${count_distinct_of_user_ids} > 100 THEN 'Hello' ELSE 'GOODBYE' END ;;
+  }
 
 
-}
+  set: some_set {
+    fields: [orders.tier_id]
+  }
+  }
