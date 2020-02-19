@@ -18,8 +18,11 @@ view: inventory_items {
       raw,
       time,
       date,
+      day_of_year,
       week,
+      day_of_week,
       month,
+      fiscal_month_num,
       quarter,
       year
     ]

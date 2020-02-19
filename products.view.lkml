@@ -18,6 +18,12 @@ view: products {
      Max: {{id._linked_value}};;
 
     }
+  dimension: brand_test {
+    type: string
+    sql:
+    case when ${category} not like "Suits" then Null else  ${category} end;;
+
+    }
 
   dimension: brand {
     type: string
@@ -61,9 +67,6 @@ view: products {
   }
 
 #
-#   parameter: turn_on_filter{
-#     type: yesno
-#   }
 
 
   dimension: category {
@@ -90,6 +93,26 @@ view: products {
     type: number
     sql: ${TABLE}.rank ;;
   }
+
+  parameter: rank_paramter{
+      type: unquoted
+    label: "Rank1"
+    allowed_value: {
+      label: "Daily"
+      value: "3.333"
+    }
+#     allowed_value: {
+#       label: "Weekly"
+#       value: "2"
+#     }
+    }
+  dimension: selector {
+    type: string
+    sql: {% if  rank_paramter._parameter_value  == '3.333' %} ${item_name}
+          {% endif %}   ;;
+  }
+
+
 
   dimension: retail_price {
     type: number
