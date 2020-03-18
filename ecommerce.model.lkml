@@ -3,10 +3,7 @@ connection: "thelook"
 # include all the views
 include: "*.view"
 
-# include all the dashboards
-<<<<<<< HEAD
-# include: "*.dashboard"
-=======
+
 include: "*.dashboard"
 #
 # week_start_day: tuesday
@@ -23,9 +20,6 @@ include: "*.dashboard"
 # # TALA IS HACKING INTO THE MAINFARME
 # # TALA IS HACKING INTO THE MAINFARME
 #
-
-
->>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
 
 explore: events {
 
@@ -118,20 +112,8 @@ explore: user_data {
 }
 
 explore: users {
-<<<<<<< HEAD
-  sql_always_where: {% if users.turn_on_filter._parameter_value == "true" %} ${state} LIKE '&'||${city}||'&'
-  {% else %} 1=1
-  {% endif %};;
 
 
-
-
-=======
-  access_filter: {
-    field: state
-    user_attribute: state
-  }
->>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
 }
 
 explore: users_nn {}
