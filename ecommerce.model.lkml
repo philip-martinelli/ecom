@@ -4,6 +4,9 @@ connection: "thelook"
 include: "*.view"
 
 # include all the dashboards
+<<<<<<< HEAD
+# include: "*.dashboard"
+=======
 include: "*.dashboard"
 #
 # week_start_day: tuesday
@@ -22,6 +25,7 @@ include: "*.dashboard"
 #
 
 
+>>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
 
 explore: events {
 
@@ -39,7 +43,9 @@ explore: inventory_items {
     relationship: many_to_one
   }
 }
-
+datagroup: scheduling {
+  sql_trigger: SELECT HOUR(CURTIME())  ;;
+}
 explore: order_items {
   join: orders {
     type: left_outer
@@ -94,7 +100,12 @@ explore: orders {
   }
 }
 
-explore: products {}
+# explore: products {
+#   sql_always_where: {% if products.turn_on_filter._parameter_value == "true" %} ${brand} LIKE '%'||${brand}||'%'
+#         {% else %} 1=1
+#         {% endif %};;
+#
+# }
 
 explore: schema_migrations {}
 
@@ -107,10 +118,20 @@ explore: user_data {
 }
 
 explore: users {
+<<<<<<< HEAD
+  sql_always_where: {% if users.turn_on_filter._parameter_value == "true" %} ${state} LIKE '&'||${city}||'&'
+  {% else %} 1=1
+  {% endif %};;
+
+
+
+
+=======
   access_filter: {
     field: state
     user_attribute: state
   }
+>>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
 }
 
 explore: users_nn {}

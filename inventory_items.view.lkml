@@ -7,9 +7,9 @@ view: inventory_items {
     sql: ${TABLE}.id ;;
   }
 
-  dimension: cost {
+  dimension: cost_2 {
     type: number
-    sql: ${TABLE}.cost ;;
+    sql: ${TABLE}.cost_2 ;;
   }
 
   dimension_group: created {
@@ -18,8 +18,11 @@ view: inventory_items {
       raw,
       time,
       date,
+      day_of_year,
       week,
+      day_of_week,
       month,
+      fiscal_month_num,
       quarter,
       year
     ]
@@ -32,8 +35,10 @@ view: inventory_items {
     sql: ${TABLE}.product_id ;;
   }
 
-  dimension_group: sold {
+  dimension_group: x {
     type: time
+     group_label: "test"
+#     label: "no_date_here"
     timeframes: [
       raw,
       time,
@@ -44,6 +49,7 @@ view: inventory_items {
       year
     ]
     sql: ${TABLE}.sold_at ;;
+
   }
 
   measure: count {

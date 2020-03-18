@@ -24,6 +24,19 @@ view: users {
     type: number
     sql: ${TABLE}.id ;;
     drill_fields: [id,first_name,last_name,orders.id]
+<<<<<<< HEAD
+  }
+
+
+  parameter: turn_on_filter{
+    type: yesno
+  }
+
+  dimension: age {
+    type: number
+    sql: ${TABLE}.age ;;
+=======
+>>>>>>> branch 'master' of git@github.com:philip-martinelli/ecom.git
   }
 
   dimension: city {

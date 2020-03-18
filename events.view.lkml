@@ -36,6 +36,11 @@ view: events {
     type: string
     sql: ${TABLE}.value ;;
   }
+# dimension: test {
+#   type: string
+#   sql: ${count} ;;
+# }
+
 
   measure: count_no_drill_fields {
     label: "Count"
