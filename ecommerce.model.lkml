@@ -67,6 +67,11 @@ explore: order_items {
 }
 
 explore: orders {
+  sql_always_where: {% if orders.date_filter._is_filtered %}
+  ${created_year} >= YEAR(date_add({% date_start orders.date_filter %},Interval -1 YEAR) )  AND ${created_year} < YEAR(date_add({% date_start orders.date_filter %},Interval 1 YEAR) )
+  {% else %}
+  1=1
+  {% endif %};;
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;

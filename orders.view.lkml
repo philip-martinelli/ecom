@@ -9,6 +9,11 @@ view: orders {
     type: date
   }
 
+  dimension: previous_year_filter {
+    type: yesno
+    sql: YEAR(date_add({% date_start date_filter %},Interval -1 YEAR) ) = ${created_year} ;;
+  }
+
   dimension: yesno_date {
     type: yesno
     sql: {% condition date_filter %} ${created_raw} {% endcondition %} ;;
@@ -32,6 +37,15 @@ view: orders {
     }
   }
 
+  filter: date_time_param {
+    type: string
+  }
+
+  dimension: yesnoafterparam {
+    type: yesno
+    sql: ${created_raw} >= TIMESTAMP({% parameter date_time_param %}) ;;
+  }
+
   dimension_group: created {
     type: time
     timeframes: [
@@ -45,6 +59,7 @@ view: orders {
       day_of_week,
       day_of_week_index,
       month,
+      minute15,
       month_name,
       quarter,
       year,
@@ -55,6 +70,7 @@ view: orders {
       second
     ]
     sql: ${TABLE}.created_at ;;
+#     html: {{value | date:"%H:%M"}} ;;
   }
 
   dimension: diff_date_created_date_and_now {
