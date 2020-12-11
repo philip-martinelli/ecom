@@ -44,6 +44,26 @@ view: order_items {
     value_format_name: usd_0
   }
 
+  measure: percent_change {
+    type: number
+    sql: ${products.count}/${count} ;;
+    html: {% if percent_change._value >= 1 %}
+    {{ negative_concat._value }}
+    {% else %}
+    {{ positive_concat._value }}
+    {% endif %}
+    ;;
+  }
+  measure: negative_concat {
+    type: string
+    sql: concat("🔻", ${percent_change} ,${products.count}) ;;
+  }
+
+  measure: positive_concat {
+    type: string
+    sql: concat("🔺", ${percent_change} , ${products.count}) ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [orders.id,orders.created_date,orders.diff_date_created_date_and_now, users.email,users.city,users.state,users.country, products.brand,products.item_name,products.sku]
