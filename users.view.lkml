@@ -1,7 +1,7 @@
 view: users {
 
   sql_table_name: demo_db.users ;;
-
+drill_fields: [id]
 
 ##############################################################
 
@@ -9,6 +9,10 @@ view: users {
     type: yesno
   }
 
+  measure: count2 {
+    type: count
+    drill_fields: []
+  }
 
 
   measure: test_count {
