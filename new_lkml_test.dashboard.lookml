@@ -1,5 +1,5 @@
-- dashboard: new_lkml_test
-  title: new_lkml_test
+- dashboard: ChangeMyName
+  title: ChangeMyName
   layout: newspaper
   elements:
   - title: New Tile
